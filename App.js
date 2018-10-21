@@ -4,11 +4,16 @@ import AddDeck from './components/AddDeck'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import DeckDetail from './components/DeckDetail'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 export default class App extends React.Component {
   render() {
     return (
-      <MainNavigator />
+      <Provider store={createStore(reducer)}>
+        <MainNavigator />
+      </Provider>
     );
   }
 }

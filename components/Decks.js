@@ -1,9 +1,24 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import DeckInfo from './DeckInfo'
+import { fetchDecks } from '../utils/api'
+import { receiveDecks } from '../actions'
+import { connect } from 'react-redux'
 
 class Decks extends Component {
+    state = {
+      ready: false,
+    }
+
+    componentDidMount () {
+      const { dispatch } = this.props
+
+      fetchDecks().then((decks) => dispatch(receiveDecks(decks)))
+      debugger
+    }
+
     render () {
+      const { decks } = this.props
         return (
             <ScrollView style={styles.scrollView}>
             { Object.keys(decks).map( (deck) => (
@@ -21,32 +36,6 @@ class Decks extends Component {
     }
 }
 
-
-const decks = {
-    React: {
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.'
-          }
-        ]
-      }
-}
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -61,4 +50,10 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Decks
+function mapStateToProps (decks) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(Decks)
