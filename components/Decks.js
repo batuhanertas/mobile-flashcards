@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView, FlatList } from 'react-native';
 import DeckInfo from './DeckInfo'
 
 class Decks extends Component {
@@ -7,11 +7,11 @@ class Decks extends Component {
 
     render () {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.scrollView}>
             { Object.keys(decks).map( (deck) => (
                 <DeckInfo key={deck} deck={decks[deck]} />
             ))}
-            </View>
+            </ScrollView>
         )
     }
 }
@@ -49,6 +49,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    scrollView: {
+        flex: 1,
+        backgroundColor: '#fff',
+        marginTop: 50
+    }
   });
 
 export default Decks
