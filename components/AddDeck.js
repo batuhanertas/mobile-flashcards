@@ -1,23 +1,30 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import createDeck from '../utils/api'
+import { createDeck } from '../utils/api'
+import { addDeck } from '../actions'
+import { connect } from 'react-redux'
 
-create = () => {
-    const key = this.state.text;
 
-    const deck = {
-        title: key,
-        questions: []
-    }
-
-    createDeck({ key, deck })
-}
 
 class AddDeck extends Component {
+    create = () => {
+        const key = this.state.text;
+    
+        const deck = {
+            title: key,
+            questions: []
+        }
+        debugger
+        this.props.dispatch(addDeck({
+            [key]: deck
+          }))
+    
+        createDeck({ key, deck })
+    }
+
     state = {
         text: '',
     }
-
     render () {
         return (
             <View style={styles.container}>
@@ -70,4 +77,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default AddDeck
+export default connect()(AddDeck)

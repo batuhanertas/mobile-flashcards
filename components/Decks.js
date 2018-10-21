@@ -14,7 +14,6 @@ class Decks extends Component {
       const { dispatch } = this.props
 
       fetchDecks().then((decks) => dispatch(receiveDecks(decks)))
-      debugger
     }
 
     render () {
