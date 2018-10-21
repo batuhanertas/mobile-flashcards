@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import DeckInfo from './DeckInfo'
 
 class Decks extends Component {
-
-
     render () {
         return (
             <ScrollView style={styles.scrollView}>
             { Object.keys(decks).map( (deck) => (
-                <DeckInfo key={deck} deck={decks[deck]} />
+                <TouchableOpacity 
+                    key={deck}
+                    onPress={() => this.props.navigation.navigate(
+                    'DeckDetail',
+                    { deck: deck }
+                    )}>
+                    <DeckInfo key={deck} deck={decks[deck]} />
+                ></TouchableOpacity>
             ))}
             </ScrollView>
         )

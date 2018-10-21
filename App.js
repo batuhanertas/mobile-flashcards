@@ -1,15 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
 import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
-
+import DeckDetail from './components/DeckDetail'
 
 export default class App extends React.Component {
   render() {
     return (
-      <Tabs />
+      <MainNavigator />
     );
   }
 }
@@ -28,5 +27,24 @@ const Tabs = createBottomTabNavigator({
       tabBarLabel: 'AddDeck',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add-circle-outline' size={30} color={tintColor} />
     },
+  },
+});
+
+
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f26f28',
+      },
+    }),
   },
 });
