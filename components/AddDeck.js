@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import createDeck from '../utils/api'
+
+create = () => {
+    const key = this.state.text;
+
+    const deck = {
+        title: key,
+        questions: []
+    }
+
+    createDeck({ key, deck })
+}
 
 class AddDeck extends Component {
     state = {
@@ -15,7 +27,7 @@ class AddDeck extends Component {
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={this.create}>
                     <Text style={styles.submitBtnText}>Create Deck</Text>
                 </TouchableOpacity>
             </View>
@@ -35,7 +47,8 @@ const styles = StyleSheet.create({
         height: 40, 
         borderColor: '#000', 
         borderWidth: 1,
-        width: 150
+        borderRadius: 7,
+        width: 250
     },
     button: {
         marginTop: 25,
