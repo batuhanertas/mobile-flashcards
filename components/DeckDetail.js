@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import DeckInfo from './DeckInfo'
 
 class DeckDetail extends Component {
     
@@ -21,7 +20,15 @@ class DeckDetail extends Component {
         
         return (
             <View style={styles.container}>
-                <DeckInfo key={deck} deck={deck} />
+                <Text style={styles.deckTitle}>{deck.title}</Text>
+                <Text style={styles.numberOfCards}>{deck.questions.length} Cards</Text>
+                <TouchableOpacity style={styles.button} onPress={this.addCard}>
+                    <Text style={styles.btnText}>Add Card</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={this.startQuiz}>
+                    <Text style={styles.btnText}>Start Quiz</Text>
+                </TouchableOpacity>
+                <Text style={styles.deleteDeck} onPress={this.deleteDeck}>Delete Deck</Text>
             </View>
         )
     }
@@ -34,7 +41,35 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    button: {
+        backgroundColor: '#20b71b',
+        padding: 10,
+        borderRadius: 7,
+        height: 45,
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 40,
+    },
+    btnText: {
+        color: '#fff',
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    deckTitle: {
+        fontSize: 42
+    },
+    numberOfCards: {
+        fontSize: 22,
+        marginBottom: 40
+    },
+    deleteDeck: {
+        color: '#b71845',
+        fontSize: 22,
+        marginTop: 40
+    }
   });
+
+
 
 function mapStateToProps (decks) {
   return {

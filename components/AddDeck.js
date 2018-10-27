@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import { createDeck } from '../utils/api'
 import { addDeck } from '../actions'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 
 
 
