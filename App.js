@@ -1,6 +1,7 @@
 import React from 'react'
 import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
+import AddCard from './components/AddCard'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import DeckDetail from './components/DeckDetail'
@@ -50,6 +51,16 @@ const MainNavigator = createStackNavigator({
       headerStyle: {
         backgroundColor: '#f26f28',
       },
+    }),
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f26f28',
+      },
+      title: 'Add Card'
     }),
   },
 });

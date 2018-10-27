@@ -13,7 +13,6 @@ class DeckDetail extends Component {
     }
 
     render () {
-        
         const { decks, navigation } = this.props
         const deckName = navigation.state.params.deck
         const deck = decks[deckName]
@@ -22,7 +21,11 @@ class DeckDetail extends Component {
             <View style={styles.container}>
                 <Text style={styles.deckTitle}>{deck.title}</Text>
                 <Text style={styles.numberOfCards}>{deck.questions.length} Cards</Text>
-                <TouchableOpacity style={styles.button} onPress={this.addCard}>
+                <TouchableOpacity style={styles.button} 
+                onPress={() => this.props.navigation.navigate(
+                    'AddCard',
+                    { deck: deckName }
+                )}>
                     <Text style={styles.btnText}>Add Card</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={this.startQuiz}>
