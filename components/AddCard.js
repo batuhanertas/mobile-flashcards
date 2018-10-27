@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
+import { addCard } from '../actions'
+import { addNewCard } from '../utils/api'
 
 class AddCard extends Component {
     state = {
@@ -8,24 +10,35 @@ class AddCard extends Component {
         answer: ''
     }
 
-    addCard = (deck) => {
-        if (!this.state.question) {
+    addCard = (deckName) => {
+        const question = this.state.question
+        const answer = this.state.answer
+
+        if (!question) {
             alert("Question cannot be empty!")
             return
         }
 
-        if (!this.state.answer) {
+        if (!answer) {
             alert("Answer cannot be empty!")
             return
         }
 
+        const card = { question, answer }
+
+        this.props.dispatch(addCard({
+            deck: deckName,
+            card: card
+        }))
         
+        addNewCard(deckName, card)
+
+        this.props.navigation.navigate('DeckDetail',{ deck: deckName })
+
     }
 
     render() {
-        const { decks, navigation } = this.props
-        const deckName = navigation.state.params.deck
-        const deck = decks[deckName]
+        const deckName = this.props.navigation.state.params.deck
 
         return (
             <View style={styles.container}>
@@ -41,7 +54,7 @@ class AddCard extends Component {
                     onChangeText={(answer) => this.setState({answer})}
                     value={this.state.answer}
                 />
-                <TouchableOpacity style={styles.button} onPress={(deck) => this.addCard(deck)}>
+                <TouchableOpacity style={styles.button} onPress={() => this.addCard(deckName)}>
                     <Text style={styles.btnText}>Submit</Text>
                 </TouchableOpacity>
             </View>

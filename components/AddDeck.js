@@ -17,7 +17,7 @@ class AddDeck extends Component {
         
         this.props.dispatch(addDeck({
             [key]: deck
-          }))
+        }))
     
         createDeck({ key, deck })
 

@@ -13,6 +13,17 @@ export function fetchDecks () {
         .then(deckResults)
 }
 
+
+export function addNewCard (deckName, card) {
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then(decks => JSON.parse(decks))
+        .then(decks => {
+            decks[deckName].questions = decks[deckName].questions.concat(card)
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
+            return decks
+        })
+}
+
 function deckResults(results) {
     return results === null
     ? setDummyData()
