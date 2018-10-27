@@ -28,7 +28,6 @@ class DeckDetail extends Component {
                 <TouchableOpacity style={styles.button} onPress={this.startQuiz}>
                     <Text style={styles.btnText}>Start Quiz</Text>
                 </TouchableOpacity>
-                <Text style={styles.deleteDeck} onPress={this.deleteDeck}>Delete Deck</Text>
             </View>
         )
     }
@@ -61,11 +60,6 @@ const styles = StyleSheet.create({
     numberOfCards: {
         fontSize: 22,
         marginBottom: 40
-    },
-    deleteDeck: {
-        color: '#b71845',
-        fontSize: 22,
-        marginTop: 40
     }
   });
 

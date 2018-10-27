@@ -14,7 +14,7 @@ class AddDeck extends Component {
             title: key,
             questions: []
         }
-        debugger
+        
         this.props.dispatch(addDeck({
             [key]: deck
           }))
