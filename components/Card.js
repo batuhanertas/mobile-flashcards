@@ -28,7 +28,6 @@ class Card extends Component {
         
         this.setState({
             questions: questions,
-            numberOfQuestions: questions.length,
             showAnswer: false
         })
     }
@@ -40,10 +39,9 @@ class Card extends Component {
     }
 
     render() {
-        let numberOfCards = this.props.navigation.state.params.deck.questions.length
         return (
             <View style={styles.container}>
-                {numberOfCards === 0
+                {this.state.numberOfQuestions === 0
                 ? <Text style={styles.info}>
                     Sorry, you cannot take this quiz, 
                     because there are no cards in the deck.
@@ -58,6 +56,10 @@ class Card extends Component {
                           </Text>
                         : <Text style={styles.showAnswer}>{this.state.questions[0].answer}</Text>
                     }
+                    <Text style={styles.remainingQuestions}>
+                        Number of remaining questions: 
+                        {this.state.numberOfQuestions - (this.state.correct + this.state.incorrect)}
+                    </Text>
                     <TouchableOpacity style={[styles.button, styles.correctButton]} 
                         onPress={() => this.answerQuestion(true)}>
                         <Text style={styles.submitBtnText}>Correct</Text>
@@ -113,6 +115,11 @@ const styles = StyleSheet.create({
     },
     showAnswer: {
         fontSize: 22,
+        textAlign: 'center',
+        marginTop: 25
+    },
+    remainingQuestions: {
+        fontSize: 18,
         textAlign: 'center',
         marginTop: 25
     }
