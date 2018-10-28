@@ -7,8 +7,18 @@ import { connect } from 'react-redux'
 
 
 class AddDeck extends Component {
-    create = () => {
+    create = (decks) => {
         const key = this.state.text;
+
+        if (!key) {
+            alert("Deck title cannot be empty!")
+            return
+        }
+
+        if (Object.keys(decks).indexOf(key) > -1) {
+            alert('Deck already exists!')
+            return
+        }
     
         const deck = {
             title: key,
@@ -21,6 +31,10 @@ class AddDeck extends Component {
     
         createDeck({ key, deck })
 
+        this.setState({
+            text: ''
+        })
+
         this.props.navigation.navigate('DeckDetail',{ deck: key })
     }
 
@@ -28,6 +42,7 @@ class AddDeck extends Component {
         text: '',
     }
     render () {
+        const { decks } = this.props
         return (
             <View style={styles.container}>
                 <Text style={styles.question}>What is the title of your deck?</Text>
@@ -36,7 +51,7 @@ class AddDeck extends Component {
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}
                 />
-                <TouchableOpacity style={styles.button} onPress={this.create}>
+                <TouchableOpacity style={styles.button} onPress={() => this.create(decks)}>
                     <Text style={styles.submitBtnText}>Create Deck</Text>
                 </TouchableOpacity>
             </View>
@@ -79,4 +94,10 @@ const styles = StyleSheet.create({
     }
   });
 
-export default connect()(AddDeck)
+  function mapStateToProps (decks) {
+    return {
+      decks
+    }
+  }
+
+export default connect(mapStateToProps)(AddDeck)
