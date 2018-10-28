@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import Score from './Score'
 
 class Card extends Component {
     state = {
@@ -41,33 +42,39 @@ class Card extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.numberOfQuestions === 0
+                { this.state.numberOfQuestions === 0
                 ? <Text style={styles.info}>
                     Sorry, you cannot take this quiz, 
                     because there are no cards in the deck.
                   </Text> 
                 : <View>
-                    <Text style={styles.question}>
-                        {this.state.questions[0].question}
-                    </Text>
-                    { !this.state.showAnswer
-                        ? <Text style={styles.showAnswer} onPress={this.showAnswer}>
-                            Show Answer
-                          </Text>
-                        : <Text style={styles.showAnswer}>{this.state.questions[0].answer}</Text>
+                    { this.state.numberOfQuestions === (this.state.correct + this.state.incorrect)
+                        ?  <Score />
+                        :  <View>
+                                <Text style={styles.question}>
+                                    {this.state.questions[0].question}
+                                </Text>
+                                { !this.state.showAnswer
+                                    ? <Text style={styles.showAnswer} onPress={this.showAnswer}>
+                                        Show Answer
+                                      </Text>
+                                    : <Text style={styles.showAnswer}>{this.state.questions[0].answer}</Text>
+                                }
+                                <Text style={styles.remainingQuestions}>
+                                    Number of remaining questions: 
+                                    {this.state.numberOfQuestions - (this.state.correct + this.state.incorrect)}
+                                </Text>
+                                <TouchableOpacity style={[styles.button, styles.correctButton]} 
+                                    onPress={() => this.answerQuestion(true)}>
+                                    <Text style={styles.submitBtnText}>Correct</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.incorrectButton]} 
+                                    onPress={() => this.answerQuestion(false)}>
+                                    <Text style={styles.submitBtnText}>Incorrect</Text>
+                                </TouchableOpacity>
+                            </View>
                     }
-                    <Text style={styles.remainingQuestions}>
-                        Number of remaining questions: 
-                        {this.state.numberOfQuestions - (this.state.correct + this.state.incorrect)}
-                    </Text>
-                    <TouchableOpacity style={[styles.button, styles.correctButton]} 
-                        onPress={() => this.answerQuestion(true)}>
-                        <Text style={styles.submitBtnText}>Correct</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.incorrectButton]} 
-                        onPress={() => this.answerQuestion(false)}>
-                        <Text style={styles.submitBtnText}>Incorrect</Text>
-                    </TouchableOpacity>
+                    
                   </View>
                 }
                 
