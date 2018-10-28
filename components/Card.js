@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { NavigationActions } from 'react-navigation'
+import { clearLocalNotification, setLocalNotification } from '../utils/helper'
 
 
 class Card extends Component {
@@ -31,6 +32,11 @@ class Card extends Component {
             index: index + 1,
             showAnswer: false
         })
+
+        if (this.state.numberOfQuestions === (this.state.correct + this.state.incorrect)) {
+            clearLocalNotification()
+                .then(setLocalNotification)
+        }
     }
 
     showAnswer = () => {
@@ -71,7 +77,7 @@ class Card extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.button, styles.goBackButton]}
                                     onPress={this.toHome}>
-                                    <Text style={styles.btnText}>Back to Deck Detail</Text>
+                                    <Text style={styles.btnText}>Back to Deck</Text>
                                 </TouchableOpacity>
                            </View>
                         :  <View>
