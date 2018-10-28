@@ -9,6 +9,7 @@ class Card extends Component {
         questions: this.props.navigation.state.params.deck.questions,
         numberOfQuestions: this.props.navigation.state.params.deck.questions.length,
         showAnswer: false,
+        index: 0
     }
 
     answerQuestion = (correct) => {
@@ -24,11 +25,9 @@ class Card extends Component {
             })
         }
 
-        questions = this.state.questions
-        questions.shift()
-        
+        let index = this.state.index
         this.setState({
-            questions: questions,
+            index: index + 1,
             showAnswer: false
         })
     }
@@ -52,13 +51,13 @@ class Card extends Component {
                         ?  <Score />
                         :  <View>
                                 <Text style={styles.question}>
-                                    {this.state.questions[0].question}
+                                    {this.state.questions[this.state.index].question}
                                 </Text>
                                 { !this.state.showAnswer
                                     ? <Text style={styles.showAnswer} onPress={this.showAnswer}>
                                         Show Answer
                                       </Text>
-                                    : <Text style={styles.showAnswer}>{this.state.questions[0].answer}</Text>
+                                    : <Text style={styles.showAnswer}>{this.state.questions[this.state.index].answer}</Text>
                                 }
                                 <Text style={styles.remainingQuestions}>
                                     Number of remaining questions: 
