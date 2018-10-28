@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import Score from './Score'
+
 
 class Card extends Component {
     state = {
@@ -38,6 +38,14 @@ class Card extends Component {
         })
     }
 
+    restartQuiz = () => {
+        this.setState({
+            correct: 0,
+            incorrect: 0,
+            index: 0
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -48,7 +56,15 @@ class Card extends Component {
                   </Text> 
                 : <View>
                     { this.state.numberOfQuestions === (this.state.correct + this.state.incorrect)
-                        ?  <Score />
+                        ?  <View>
+                                <Text style={styles.question}>Score</Text>
+                                <Text style={styles.info}>Correct: {this.state.correct}</Text>
+                                <Text style={styles.info}>Incorrect: {this.state.incorrect}</Text>
+                                <TouchableOpacity style={[styles.button, styles.correctButton]}
+                                    onPress={this.restartQuiz}>
+                                    <Text style={styles.btnText}>Restart Quiz</Text>
+                                </TouchableOpacity>
+                           </View>
                         :  <View>
                                 <Text style={styles.question}>
                                     {this.state.questions[this.state.index].question}
@@ -65,11 +81,11 @@ class Card extends Component {
                                 </Text>
                                 <TouchableOpacity style={[styles.button, styles.correctButton]} 
                                     onPress={() => this.answerQuestion(true)}>
-                                    <Text style={styles.submitBtnText}>Correct</Text>
+                                    <Text style={styles.btnText}>Correct</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.button, styles.incorrectButton]} 
                                     onPress={() => this.answerQuestion(false)}>
-                                    <Text style={styles.submitBtnText}>Incorrect</Text>
+                                    <Text style={styles.btnText}>Incorrect</Text>
                                 </TouchableOpacity>
                             </View>
                     }
@@ -97,7 +113,7 @@ const styles = StyleSheet.create({
         marginLeft: 40,
         marginRight: 40,
     },
-    submitBtnText: {
+    btnText: {
         color: '#fff',
         fontSize: 22,
         textAlign: 'center',
