@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 
 class Card extends Component {
@@ -46,6 +47,10 @@ class Card extends Component {
         })
     }
 
+    toHome = () => {
+        this.props.navigation.dispatch(NavigationActions.back())
+      }
+
     render() {
         return (
             <View style={styles.container}>
@@ -63,6 +68,10 @@ class Card extends Component {
                                 <TouchableOpacity style={[styles.button, styles.correctButton]}
                                     onPress={this.restartQuiz}>
                                     <Text style={styles.btnText}>Restart Quiz</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.goBackButton]}
+                                    onPress={this.toHome}>
+                                    <Text style={styles.btnText}>Back to Deck Detail</Text>
                                 </TouchableOpacity>
                            </View>
                         :  <View>
@@ -124,6 +133,10 @@ const styles = StyleSheet.create({
     },
     incorrectButton: {
         backgroundColor: '#e51e04',
+    },
+    goBackButton: {
+        marginTop: 25,
+        backgroundColor: '#f26f28',
     },
     question: {
         marginTop: 25,
